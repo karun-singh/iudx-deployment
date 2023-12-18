@@ -22,8 +22,11 @@ def request(request_method,Api_Token,Api_Url,info,files,name):
 
         headers = CaseInsensitiveDict()
         headers["token"] = Api_Token
-        headers["Content"] = "application/json"
-        resp = requests.request(request_method,Api_Url, headers=headers, data=info,files=files)
+        headers["Content-Type"] = "application/json"
+        if request_method=="GET":
+                resp = requests.request(request_method,Api_Url, headers=headers)
+        else:
+                resp = requests.request(request_method,Api_Url, headers=headers, data=json.dumps(info),files=files)
         return (resp)
 
 # Funtions to performs various API tests based on the provided configuration.
